@@ -6,6 +6,14 @@ bfs/result.txt
 b+tree/b+tree.out
 b+tree/output.txt
 
+cfd/density
+cfd/density_energy
+cfd/momentum
+cfd/euler3d
+cfd/euler3d_double
+cfd/pre_euler3d
+cfd/pre_euler3d_double
+
 
 
 
