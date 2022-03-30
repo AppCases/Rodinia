@@ -1,0 +1,3 @@
+# usage: mummergpu [options] reference.fna query.fna
+
+bin/mummergpu data/shortqry.fa data/shortref.fa > NC_00399.out

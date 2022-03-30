@@ -40,6 +40,11 @@ leukocyte/meschach_lib/meschach.a
 
 lud/lud_cuda
 
+mummergpu/*.out
+mummergpu/bin
+mummergpu/lib
+src/obj
+
 *.o
 profiling
 data

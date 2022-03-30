@@ -1,4 +1,13 @@
-include ../../../common/make.config
+CUDA_DIR = /usr/local/cuda
+
+# CUDA toolkit libraries
+CUDA_LIB_DIR := $(CUDA_DIR)/lib
+ifeq ($(shell uname -m), x86_64)
+     ifeq ($(shell if test -d $(CUDA_DIR)/lib64; then echo T; else echo F; fi), T)
+     	CUDA_LIB_DIR := $(CUDA_DIR)/lib64
+     endif
+endif
+
 
 all: mummergpu
 .SUFFIXES : .cu .cu_dbg_o .c_dbg_o .cpp_dbg_o .cu_rel_o .c_rel_o .cpp_rel_o .cubin
@@ -38,7 +47,7 @@ BINNAME    ?= mummergpu
 INCLUDES  += -I. -I$(CUDA_INSTALL_PATH)/include 
 
 # Libs
-LIB       := -L$(CUDA_LIB_DIR) -L$(LIBDIR) -lcuda -lcudart -lGL -lGLU ${LIB}
+LIB       := -L$(CUDA_LIB_DIR) -L$(LIBDIR) -lcuda -lcudart ${LIB}
 
 # Warning flags
 CXXWARN_FLAGS := \
@@ -79,7 +88,8 @@ ifeq ($(dbg),1)
 	BINSUBDIR   := debug
 	LIBSUFFIX   := D
 else 
-	COMMONFLAGS += -O3
+#	COMMONFLAGS += -O3
+	COMMONFLAGS += -O3 -g
 	BINSUBDIR   := release
 	LIBSUFFIX   :=
 endif
@@ -96,7 +106,7 @@ ifeq ($(fastmath), 1)
 endif
 
 # Add cudacc flags
-NVCCFLAGS += -Xcompiler "$(CUDACCFLAGS)"
+NVCCFLAGS += -Xcompiler "$(CUDACCFLAGS)" -lineinfo
 
 # Add common flags
 NVCCFLAGS += $(COMMONFLAGS)
