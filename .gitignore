@@ -27,6 +27,8 @@ hotspot3D/output.out
 
 heartwall/heartwall
 
+huffman/pavle
+
 
 *.o
 profiling

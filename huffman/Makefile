@@ -1,11 +1,11 @@
 NVCC=nvcc
 CC = g++
 
-CUDA_INCLUDEPATH=/usr/local/cuda-6.5/include
+CUDA_INCLUDEPATH=/usr/local/cuda/include
 
-NVCC_OPTS=-O3 -arch=sm_35 -Xcompiler -m64 -g -G
+NVCC_OPTS=-O3 -arch=sm_86 -Xcompiler -m64 -g -lineinfo
 
-GCC_OPTS=-O3 -Wall -Wextra -m64
+GCC_OPTS=-O3 -Wall -Wextra -m64 -g
 
 OBJ = main_test_cu.o stats_logger.o vlc_kernel_sm64huff.o scan.o pack_kernels.o cpuencode.o
 SRC = main_test_cu.cu
