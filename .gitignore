@@ -53,6 +53,9 @@ nn/hurricane_gen
 
 nw/needle
 
+particlefilter/particlefilter_naive
+particlefilter/particlefilter_float
+
 *.o
 profiling
 data
