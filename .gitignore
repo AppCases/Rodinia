@@ -19,6 +19,9 @@ dwt2d/*.bmp.dwt.*
 
 gaussian/gaussian
 
+hotspot/hotspot
+hotspot/output.out
+
 
 *.o
 profiling
