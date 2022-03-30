@@ -51,6 +51,8 @@ myocyte/output.txt
 nn/nn
 nn/hurricane_gen
 
+nw/needle
+
 *.o
 profiling
 data
