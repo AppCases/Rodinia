@@ -59,6 +59,8 @@ particlefilter/particlefilter_float
 pathfinder/pathfinder
 pathfinder/result.txt
 
+srad/srad_v2/srad
+
 *.o
 profiling
 data
