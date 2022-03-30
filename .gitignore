@@ -35,6 +35,9 @@ kmeans/kmeans
 
 lavaMD/lavaMD
 
+leukocyte/CUDA/leukocyte
+leukocyte/meschach_lib/meschach.a
+
 *.o
 profiling
 data
