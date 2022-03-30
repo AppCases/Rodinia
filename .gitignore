@@ -48,6 +48,9 @@ mummergpu/src/obj
 myocyte/myocyte.out
 myocyte/output.txt
 
+nn/nn
+nn/hurricane_gen
+
 *.o
 profiling
 data
