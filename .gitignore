@@ -17,6 +17,8 @@ cfd/pre_euler3d_double
 dwt2d/dwt2d
 dwt2d/*.bmp.dwt.*
 
+gaussian/gaussian
+
 
 *.o
 profiling
