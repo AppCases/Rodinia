@@ -1,4 +1,12 @@
-include ../../common/make.config
+CUDA_DIR = /usr/local/cuda
+
+# CUDA toolkit libraries
+CUDA_LIB_DIR := $(CUDA_DIR)/lib
+ifeq ($(shell uname -m), x86_64)
+     ifeq ($(shell if test -d $(CUDA_DIR)/lib64; then echo T; else echo F; fi), T)
+     	CUDA_LIB_DIR := $(CUDA_DIR)/lib64
+     endif
+endif
 
 NVCC = $(CUDA_DIR)/bin/nvcc
 
@@ -11,7 +19,8 @@ TARGET_G = sc_gpu
 ifeq ($(dbg),1)
 	NVCC_FLAGS += -g -O0
 else
-	NVCC_FLAGS += -O3
+#	NVCC_FLAGS += -O3
+	NVCC_FLAGS += -O3 -g -lineinfo
 endif
 
 # make emu=1 compiles the CUDA kernels for emulation

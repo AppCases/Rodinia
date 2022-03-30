@@ -61,6 +61,10 @@ pathfinder/result.txt
 
 srad/srad_v2/srad
 
+streamcluster/sc_gpu
+streamcluster/output.txt
+
+
 *.o
 profiling
 data
