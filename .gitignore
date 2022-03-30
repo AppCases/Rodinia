@@ -33,6 +33,8 @@ hybridsort/hybridsort
 
 kmeans/kmeans
 
+lavaMD/lavaMD
+
 *.o
 profiling
 data
