@@ -8,7 +8,9 @@ DEFS += \
 NVCCFLAGS += -I../common \
 			 -O3 \
 			 -use_fast_math \
-			 -arch=sm_13 \
+			 -arch=sm_86 \
+			 -g \
+			 -lineinfo \
 			 -lm \
 			 $(SPACE)
 
@@ -16,6 +18,7 @@ CFLAGS += -I../common \
 					-I/usr/include/cuda \
 		  -O3 \
 		  -Wall \
+		  -g \
 		  $(SPACE)
 
 # Add source files here

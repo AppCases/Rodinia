@@ -38,6 +38,8 @@ lavaMD/lavaMD
 leukocyte/CUDA/leukocyte
 leukocyte/meschach_lib/meschach.a
 
+lud/lud_cuda
+
 *.o
 profiling
 data
