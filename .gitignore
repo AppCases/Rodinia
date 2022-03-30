@@ -43,7 +43,10 @@ lud/lud_cuda
 mummergpu/*.out
 mummergpu/bin
 mummergpu/lib
-src/obj
+mummergpu/src/obj
+
+myocyte/myocyte.out
+myocyte/output.txt
 
 *.o
 profiling
