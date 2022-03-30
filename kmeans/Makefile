@@ -1,4 +1,13 @@
-include ../../common/make.config
+CUDA_DIR = /usr/local/cuda
+
+# CUDA toolkit libraries
+CUDA_LIB_DIR := $(CUDA_DIR)/lib
+ifeq ($(shell uname -m), x86_64)
+     ifeq ($(shell if test -d $(CUDA_DIR)/lib64; then echo T; else echo F; fi), T)
+     	CUDA_LIB_DIR := $(CUDA_DIR)/lib64
+     endif
+endif
+
 
 # C compiler
 CC = gcc
@@ -12,7 +21,8 @@ NVCC_FLAGS = -I$(CUDA_DIR)/include
 ifeq ($(dbg),1)
 	NVCC_FLAGS += -g -O0
 else
-	NVCC_FLAGS += -O2
+#	NVCC_FLAGS += -O2
+	NVCC_FLAGS += -O2 -g -lineinfo
 endif
 
 # 'make emu=1' compiles the CUDA kernels for emulation
@@ -24,7 +34,7 @@ endif
 kmeans: cluster.o getopt.o kmeans.o kmeans_clustering.o kmeans_cuda.o rmse.o
 	$(CC) $(CC_FLAGS) cluster.o getopt.o kmeans.o kmeans_clustering.o kmeans_cuda.o rmse.o -o kmeans -L$(CUDA_LIB_DIR) -lcuda -lcudart -lm
 
-%.o: %.[ch]
+%.o: %.[c]
 	$(CC) $(CC_FLAGS) $< -c
 
 kmeans_cuda.o: kmeans_cuda.cu 

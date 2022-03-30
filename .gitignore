@@ -31,6 +31,8 @@ huffman/pavle
 
 hybridsort/hybridsort
 
+kmeans/kmeans
+
 *.o
 profiling
 data
