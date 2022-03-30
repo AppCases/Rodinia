@@ -1,2 +1,11 @@
-backprop/*.o
+backprop/backprop
+
+bfs/bfs
+bfs/result.txt
+
+
+
+
+*.o
+profiling
 data
