@@ -1,7 +1,16 @@
-include ../../common/make.config
+CUDA_DIR = /usr/local/cuda
+
+# CUDA toolkit libraries
+CUDA_LIB_DIR := $(CUDA_DIR)/lib
+ifeq ($(shell uname -m), x86_64)
+     ifeq ($(shell if test -d $(CUDA_DIR)/lib64; then echo T; else echo F; fi), T)
+     	CUDA_LIB_DIR := $(CUDA_DIR)/lib64
+     endif
+endif
+
 CC := $(CUDA_DIR)/bin/nvcc
 
-CC_FLAGS = -arch=sm_20
+CC_FLAGS = -arch=sm_86 -g -lineinfo
 
 ifdef VERIFY
 override VERIFY = -DVERIFY
@@ -20,4 +29,4 @@ hybridsort: main.cu  bucketsort.cu bucketsort.cuh bucketsort_kernel.cu histogram
 
 
 clean:
-	rm	*.o hybridsort
+	rm -f *.o hybridsort
