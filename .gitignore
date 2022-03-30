@@ -14,7 +14,8 @@ cfd/euler3d_double
 cfd/pre_euler3d
 cfd/pre_euler3d_double
 
-
+dwt2d/dwt2d
+dwt2d/*.bmp.dwt.*
 
 
 *.o

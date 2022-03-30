@@ -1,6 +1,4 @@
 #Configure
-#CUDA_INSTALL_PATH ?= /usr/local/cuda
-CUDA_INSTALL_PATH = $(CUDA_DIR)
 EXECUTABLE := dwt2d
 
 # Debug options
@@ -8,8 +6,10 @@ dbg=0
 cudagdb=0 #compile for use with cuda-gdb, note that 'dbg' must be 1 as well
 performancetest=1
 
+GPU_ARCH ?=
+
 # NVCC Options
-NVCCFLAGS += -arch sm_20
+NVCCFLAGS += $(GPU_ARCH) -g
 
 # Files
 CFILES := 
@@ -17,17 +17,17 @@ CXXFILES :=
 CUFILES := main.cu dwt.cu components.cu dwt_cuda/fdwt53.cu dwt_cuda/fdwt97.cu dwt_cuda/common.cu dwt_cuda/rdwt97.cu dwt_cuda/rdwt53.cu
 
 # Includes
-INCLUDES := -I. -I$(CUDA_INSTALL_PATH)/include
+INCLUDES := 
 
-include ../../common/make.config
-
+# lib
+LIBS = -L/usr/local/cuda/lib64/
 
 # Common flags
 COMMONFLAGS += $(INCLUDES) 
 NVCCFLAGS += $(COMMONFLAGS)
-CXXFLAGS += $(COMMONFLAGS)
+CXXFLAGS += $(COMMONFLAGS) -g
 CFLAGS += $(COMMONFLAGS) -std=c99 
-LDFLAGS += -L$(CUDA_INSTALL_PATH)/lib64 -lcudart
+LDFLAGS += -lcudart
 
 # Warning flags (from cuda common.mk)
 CXXWARN_FLAGS := \
@@ -66,8 +66,8 @@ ifeq ($(dbg),1)
         NVCCFLAGS += -G
     endif
 else 
-    COMMONFLAGS += -O2 
-    NVCCFLAGS   += --compiler-options -fno-strict-aliasing
+    COMMONFLAGS += -O3 -g
+    NVCCFLAGS   += --compiler-options -fno-strict-aliasing -lineinfo
     CXXFLAGS    += -fno-strict-aliasing
     CFLAGS      += -fno-strict-aliasing
 endif
@@ -86,7 +86,7 @@ OUTPUT = -DOUTPUT
 CXX := g++
 CC := gcc
 LINK := g++ -fPIC
-NVCC := $(CUDA_INSTALL_PATH)/bin/nvcc
+NVCC := nvcc
 
 # Generate object files list
 COBJS=$(CFILES:.c=.c.o)
@@ -105,8 +105,8 @@ CUOBJS=$(CUFILES:.cu=.cu.o)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(EXECUTABLE): $(COBJS) $(CXXOBJS) $(CUOBJS) 
-	$(LINK) -o $(EXECUTABLE) $(COBJS) $(CXXOBJS) $(CUOBJS) $(LDFLAGS)
+	$(LINK) -o $(EXECUTABLE) $(COBJS) $(CXXOBJS) $(CUOBJS) $(LDFLAGS) $(LIBS)
 
 clean:
-	rm -f $(COBJS) $(CXXOBJS) $(CUOBJS) $(EXECUTABLE)
-	rm *.bmp.dwt.*		
+	rm -f $(COBJS) $(CXXOBJS) $(CUOBJS) $(EXECUTABLE) *.bmp.dwt.*
+	
