@@ -92,14 +92,14 @@ void runVLCTest(char *file_name, uint num_block_threads, uint num_blocks) {
 
     CUDA_SAFE_CALL(cudaMalloc((void**) &d_sourceData,		  mem_size));
     CUDA_SAFE_CALL(cudaMalloc((void**) &d_destData,			  mem_size));
-    CUDA_SAFE_CALL(cudaMalloc((void**) &d_destDataPacked,	  mem_size));
+    // CUDA_SAFE_CALL(cudaMalloc((void**) &d_destDataPacked,	  mem_size));
 
     CUDA_SAFE_CALL(cudaMalloc((void**) &d_codewords,		  NUM_SYMBOLS*symbol_type_size));
     CUDA_SAFE_CALL(cudaMalloc((void**) &d_codewordlens,		  NUM_SYMBOLS*symbol_type_size));
 
-    CUDA_SAFE_CALL(cudaMalloc((void**) &d_cw32,				  mem_size));
-    CUDA_SAFE_CALL(cudaMalloc((void**) &d_cw32len,			  mem_size));
-    CUDA_SAFE_CALL(cudaMalloc((void**) &d_cw32idx,			  mem_size));
+    // CUDA_SAFE_CALL(cudaMalloc((void**) &d_cw32,				  mem_size));
+    // CUDA_SAFE_CALL(cudaMalloc((void**) &d_cw32len,			  mem_size));
+    // CUDA_SAFE_CALL(cudaMalloc((void**) &d_cw32idx,			  mem_size));
 
     CUDA_SAFE_CALL(cudaMalloc((void**)&d_cindex,         num_blocks*sizeof(unsigned int)));
     CUDA_SAFE_CALL(cudaMalloc((void**)&d_cindex2,        num_blocks*sizeof(unsigned int)));
@@ -156,9 +156,14 @@ void runVLCTest(char *file_name, uint num_block_threads, uint num_blocks) {
     printf("GPU Encoding time (SM64HUFF): %f (ms)\n", elapsedTime/NT);
     //////////////////* END KERNEL *///////////////////////////////////
 
+    CUDA_SAFE_CALL(cudaFree(d_codewords));
+    CUDA_SAFE_CALL(cudaFree(d_codewordlens));
+    CUDA_SAFE_CALL(cudaFree(d_sourceData));
+
 #ifdef TESTING
     unsigned int num_scan_elements = grid_size.x;
     preallocBlockSums(num_scan_elements);
+    CUDA_SAFE_CALL(cudaMalloc((void**) &d_destDataPacked,	  mem_size));
     cudaMemset(d_destDataPacked, 0, mem_size);
     printf("Num_blocks to be passed to scan is %d.\n", num_scan_elements);
     prescanArray(d_cindex2, d_cindex, num_scan_elements);
@@ -172,8 +177,8 @@ void runVLCTest(char *file_name, uint num_block_threads, uint num_blocks) {
 #endif 
 
     free(sourceData); free(destData);  	free(codewords);  	free(codewordlens); free(cw32);  free(cw32len); free(crefData); 
-    CUDA_SAFE_CALL(cudaFree(d_sourceData)); 	CUDA_SAFE_CALL(cudaFree(d_destData)); CUDA_SAFE_CALL(cudaFree(d_destDataPacked));
-    CUDA_SAFE_CALL(cudaFree(d_codewords)); 		CUDA_SAFE_CALL(cudaFree(d_codewordlens));
+    /* CUDA_SAFE_CALL(cudaFree(d_sourceData)); */ 	CUDA_SAFE_CALL(cudaFree(d_destData)); CUDA_SAFE_CALL(cudaFree(d_destDataPacked));
+    // CUDA_SAFE_CALL(cudaFree(d_codewords)); 		CUDA_SAFE_CALL(cudaFree(d_codewordlens));
     CUDA_SAFE_CALL(cudaFree(d_cw32)); 		CUDA_SAFE_CALL(cudaFree(d_cw32len)); 	CUDA_SAFE_CALL(cudaFree(d_cw32idx)); 
     CUDA_SAFE_CALL(cudaFree(d_cindex)); CUDA_SAFE_CALL(cudaFree(d_cindex2));
     free(cindex2);
