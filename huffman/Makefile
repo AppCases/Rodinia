@@ -1,9 +1,10 @@
 NVCC=nvcc
 CC = g++
+SM = sm_86
 
 CUDA_INCLUDEPATH=/usr/local/cuda/include
 
-NVCC_OPTS=-O3 -arch=sm_86 -Xcompiler -m64 -g -lineinfo
+NVCC_OPTS=-O3 -arch=$(SM) -Xcompiler -m64 -g -lineinfo
 
 GCC_OPTS=-O3 -Wall -Wextra -m64 -g
 
