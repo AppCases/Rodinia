@@ -79,7 +79,7 @@ int nStage2dDWT(T * in, T * out, T * backup, int pixWidth, int pixHeight, int st
     
     /* create backup of input, because each test iteration overwrites it */
     const int size = pixHeight * pixWidth * sizeof(T);
-    cudaMemcpy(backup, in, size, cudaMemcpyDeviceToDevice);
+    // cudaMemcpy(backup, in, size, cudaMemcpyDeviceToDevice);
     cudaCheckError("Memcopy device to device");
     
     /* Measure time of individual levels. */
