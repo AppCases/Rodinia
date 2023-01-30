@@ -9,7 +9,7 @@ performancetest=1
 GPU_ARCH ?=
 
 # NVCC Options
-NVCCFLAGS += $(GPU_ARCH) -g
+NVCCFLAGS += $(GPU_ARCH) -g -w
 
 # Files
 CFILES := 
